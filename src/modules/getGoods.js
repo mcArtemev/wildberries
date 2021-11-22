@@ -1,12 +1,19 @@
 const getGoods = () => {
     const links = document.querySelectorAll('.navigation-link');
+    const more = document.querySelector('.more');
+
+
 
     const renderGoods = (goods) => {
         const goodsContainer = document.querySelector('.long-goods-list');
+
+        goodsContainer.innerHTML = "";
+        
         goods.forEach(good => {
             const goodBlock = document.createElement('div');
             goodBlock.classList.add('col-lg-3')
             goodBlock.classList.add('col-sm-6');
+            goodBlock.data = good;
 
             goodBlock.innerHTML = `
                 <div class="goods-card">
@@ -39,7 +46,6 @@ const getGoods = () => {
             } else {
                 renderGoods(array)
             }
-            
         })
     }
 
@@ -54,6 +60,14 @@ const getGoods = () => {
 
     if (localStorage.getItem('goods') && window.location.pathname === '/goods.html') {
         renderGoods(JSON.parse(localStorage.getItem('goods')))
+    }
+
+    if (more) {
+        more.addEventListener('click', (event) => {
+            event.preventDefault();
+           
+           getData();
+        })
     }
 }
 
